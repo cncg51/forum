@@ -8,8 +8,8 @@ def make_html(c):
 
 def trim_utf8(text, length):
     '''utf8字符截取'''
-    extra_flag = '...' if length < len(text.decode('utf-8')) else ''
-    return text.decode('utf-8')[0:length].encode('utf-8') + extra_flag
+    extra_flag = '...' if length < len(text) else ''
+    return text[0:length] + extra_flag
 
 def comments_to_lis(comments):
     '''评论列表'''

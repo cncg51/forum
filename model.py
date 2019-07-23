@@ -7,7 +7,7 @@ import hashlib
 import settings
 
 # 连接MySQL数据库
-db = web.database(dbn='mysql', db='forum', user=settings.MYSQL_USERNAME, pw=settings.MYSQL_PASSWORD)
+db = web.database(dbn='mysql', db='forum', user=settings.MYSQL_USERNAME, pw=settings.MYSQL_PASSWORD, port=3307)
 
 
 class User:
@@ -32,8 +32,8 @@ class User:
                 db.update('users', where='id=$id', description=kwd['description'], vars=locals())
 
             return True
-        except Exception, e:
-            print e
+        except Exception as e:
+            print(e)
             return False
 
     def login(self, username, password):
@@ -82,8 +82,8 @@ class User:
         user_id = 0
         try:
             user_id = int(web.cookies().get('user_id'))
-        except Exception, e:
-            print e
+        except Exception as e:
+            print(e)
         else:
             # 刷新cookie
             web.setcookie('user_id', str(user_id), settings.COOKIE_EXPIRES)
@@ -101,8 +101,8 @@ class Post:
         try:
             db.update('posts', where='id=$id', title=title, content=content, vars=locals())
             return True
-        except Exception, e:
-            print e
+        except Exception as e:
+            print(e)
             return False
 
     def view(self, id):
@@ -120,8 +120,8 @@ class Post:
         try:
             db.delete('posts', where='id=$id', vars=locals())
             #db.query('DELETE FROM posts WHERE id=%d' % id)
-        except Exception, e:
-            print e
+        except Exception as e:
+            print(e)
 
     def list(self, page):
         '''获取第page页的所有文章'''
@@ -143,7 +143,7 @@ class Post:
 
         # 计算总页数
         post_count = self.count()
-        page_count = post_count / per_page
+        page_count = post_count // per_page
         if post_count % per_page > 0:
             page_count += 1
 
@@ -190,16 +190,16 @@ class Comment:
     def new(self, content, user_id, quote_id):
         try:
             return db.insert('comments', content=content, user_id=user_id, parent_id=self.__parent_id, quote_id=quote_id)
-        except Exception, e:
-            print e
+        except Exception as e:
+            print(e)
             return 0
 
     def ddel(self):
         try:
             #db.delete('comments', where='parent_id=$self.__parent_id', vars=locals())
             db.query('DELETE FROM comments WHERE parent_id=%d' % self.__parent_id)
-        except Exception, e:
-            print e
+        except Exception as e:
+            print(e)
 
     def list(self):
         '''获取当前文章（创建Comment实例时指定了post_id）下面的所有评论'''

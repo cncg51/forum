@@ -12,8 +12,8 @@ IMG_DIR = '/static/img'
 POSTS_PER_PAGE = 10 # 每页显示10篇文章
 
 # 本地环境下的MySQL配置
-MYSQL_USERNAME = 'your_mysql_username'
-MYSQL_PASSWORD = 'your_mysql_password'
+MYSQL_USERNAME = 'root'
+MYSQL_PASSWORD = 'mysqlroot'
 
 ##### email服务器配置 #####
 import web
@@ -24,4 +24,4 @@ web.config.smtp_password = 'your_gmail_password'
 web.config.smtp_starttls = True
 
 ##### 调试模式 #####
-web.config.debug = False
+web.config.debug = True
